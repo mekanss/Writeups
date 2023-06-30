@@ -1,4 +1,4 @@
-# 1. Exploração:
+## 1. Exploração:
 Ao entrar no site a primeira coisa que fiz, foi olhar as páginas onde um usuário comum 
 poderia acessar, notei que a aba da direita levava até 3 páginas com o diretório 
 "index.php?page=.." que costuma ser vulnerável a alguns tipos de ataques, mas além disso, 
@@ -8,7 +8,8 @@ exemplo ao digitar a mensagem “Bom dia amigos”, retornaríamos ao site princ
 seguinte URL: “http://159.65.52.96:31749/index.php?message=Bom+dia+amigos#”
 Já tendo duas oportunidades de “exploitar” o site, decidi ir para uma abordagem 
 mais agressiva.
-2. Contatos:
+
+## 2. Contatos:
 Vendo essa página dos contatos, tentei utilizar um php wrapper, para injetar um código 
 malicioso: 
 “http://159.65.52.96:31749/index.php?message=
@@ -16,12 +17,14 @@ data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&
 cmd=id”
 Infelizmente isso acabou não levando a nada, mas é algo que vale a pena investigar, 
 já que pode ser uma outra vulnerabilidade não explorada.
-3. Primeiros Fuzzes:
+
+## 3. Primeiros Fuzzes:
 Voltando para as páginas “index.php?page=..”, decidi realizar 2 tipos de fuzz, o primeiro 
 "index.php?page=FUZZ" utilizando LFI-Jhaddix.txt, não consegui nada de relevante, então 
 no segundo "index.php?FUZZ=value" utilizando burp-parameter-names.txt, novamente não 
 consegui nada, então deveria pensar em uma nova abordagem.
-4. Cookies e Wrappers:
+
+## 4. Cookies e Wrappers:
 Já que minha primeira tentativa de Fuzz não havia dado certo, comecei a procurar novas 
 possibilidades, e uma delas seria e modificar os cookies para envenenar os logs, para minha 
 decepção não consegui encontrar nenhum cookie vulnerável, por fim tentei verificar se a 
@@ -29,12 +32,14 @@ opção "allow_url_include" estava ativada ou desativada, infelizmente o site me
 um "Invalid Input Detected", logo ou era uma versão mais antiga de php, ou poderia ser o 
 Nginx ao invés de Apache2, então tentei usando o mesmo e outras versões antigas do php, 
 até a 7.0, infelizmente também não deu em nada.
-5. Imagens:
+
+## 5. Imagens:
 Um pouco sem ideias, decidi investigar as imagens do site, para ver se a pasta onde 
 estavam localizadas tinha alguma vulnerabilidade, então inspecionei o site, e consegui o 
 link para a imagem do grande barco do site, ela dava para uma pasta /images/ que estava 
 infelizmente protegida, então não consegui acessá-la.
-6. Voltando ao Fuzz:
+
+## 6. Voltando ao Fuzz:
 Nesse momento meu arsenal intelectual estava no seu limite, e voltei para o curso do HTB, 
 para ver se havia algo que eu tinha deixado passar, então foi quando me lembrei do php 
 filter.
@@ -56,7 +61,8 @@ A ideia desse comando é pegar o código convertido na base 64, depois usaremos 
 deixando, para meu azar, o index por último. É nele que eu encontrei uma linha muito 
 interessante:
 // echo '<li><a href="ilf_admin/index.php">Admin</a></li>';
-7. Entrando na sala do admin:
+
+## 7. Entrando na sala do admin:
 Com a linha de código descoberta, coloquei ela no site, no lugar do index da seguinte 
 maneira:
 http://144.126.206.23:32175/ilf_admin/index.php
@@ -73,7 +79,8 @@ Nos outros logs havia muitos links e coisas interessantes, mas decidi não as in
 enquanto, então olhei novamente a estrutura do site:
 http://144.126.206.23:32175/ilf_admin/index.php?log=chat.log
 Isso mesmo, mais fuzz.
-8. Fuzz novamente:
+
+## 8. Fuzz novamente:
 Comecei com o primeiro fuzz da seguinte forma:
 http://144.126.206.23:32175/ilf_admin/index.php?FUZZ=value
 Nesse caso, utilizei o burp-parameter-names.txt, para tentar encontrar novos 
@@ -101,7 +108,8 @@ encontrei um:
 Nesse diretório havia informações de ips, e outros elementos que estão fora de meu 
 conhecimento por enquanto, sem mais pistas voltei ao HTB para ver se podia ter perdido 
 algo novamente.
-9. Burp e Log Poison:
+
+## 9. Burp e Log Poison:
 Era a última esperança, o único que não havia tentado ainda, então seguindo os passos do 
 HTB, nota-se que há um arquivo access.log com diretórios diferentes, dependendo se é 
 apache ou Nginx, bom, graças a página que acessamos antes, sabemos que é Nginx, então 
@@ -112,7 +120,8 @@ Não deu certo, então, tive de colocar vários “../” até que encontrasse o
 Finalmente dentro do access.log, abri o BurpSuite, liguei o intercept e dei refresh na página, 
 depois disso, mandei o “proxy” para “Repeater”, e la mudei o User-Agent pra “Veneno” e 
 cliquei em send.
-10. A flag:
+
+## 10. A flag:
 Ao checar no response, dava pra ver o “Veneno”, então era possível colocar um script 
 malicioso ali e tentar navegar as pastas, logo, no lugar de User-Agent coloquei o seguinte:
 <?php system($_GET['cmd']); ?>
