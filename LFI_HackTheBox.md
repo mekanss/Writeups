@@ -167,8 +167,10 @@ uid=65534(nobody) gid=65534(nobody)
 Logo era só uma questão de navegar para encontrar a flag, no exercício fala que ela está na 
 pasta root, então fazemos um ls / no lugar do id, dessa maneira nos é revelado o que está 
 na pasta root, um txt muito interessante: flag_dacc60f2348d.txt.
+
 Por fim, fazemos agora um cat /flag_dacc60f2348d.txt e conseguimos seu conteúdo, que é 
 a flag: a9a892dbc9faf9a014f58e007721835e
+
 11. Conclusões:
 O sistema invadido tem várias vulnerabilidades, mas com meu conhecimento consegui 
 explorar poucas delas, vale notar a questão do chat dos Contatos, além dos vários números 
