@@ -60,7 +60,7 @@ A ideia desse comando é pegar o código convertido na base 64, depois usaremos 
 “echo código | base64 –d" para transformar o código em uma página, tentei em todos 
 deixando, para meu azar, o index por último. É nele que eu encontrei uma linha muito 
 interessante:
-// echo '<li><a href="ilf_admin/index.php">Admin</a></li>';
+(// echo '<li><a href="ilf_admin/index.php">Admin</a></li>';)
 
 ## 7. Entrando na sala do admin:
 Com a linha de código descoberta, coloquei ela no site, no lugar do index da seguinte 
