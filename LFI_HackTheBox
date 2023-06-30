@@ -1,4 +1,4 @@
-1. Exploração:
+# 1. Exploração:
 Ao entrar no site a primeira coisa que fiz, foi olhar as páginas onde um usuário comum 
 poderia acessar, notei que a aba da direita levava até 3 páginas com o diretório 
 "index.php?page=.." que costuma ser vulnerável a alguns tipos de ataques, mas além disso, 
