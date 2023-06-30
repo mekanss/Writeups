@@ -171,7 +171,7 @@ na pasta root, um txt muito interessante: flag_dacc60f2348d.txt.
 Por fim, fazemos agora um cat /flag_dacc60f2348d.txt e conseguimos seu conteúdo, que é 
 a flag: a9a892dbc9faf9a014f58e007721835e
 
-11. Conclusões:
+## 11. Conclusões:
 O sistema invadido tem várias vulnerabilidades, mas com meu conhecimento consegui 
 explorar poucas delas, vale notar a questão do chat dos Contatos, além dos vários números 
 e nomes dos usuários que aparecem no Chat Log, uma sugestão clara que poderá remediar 
